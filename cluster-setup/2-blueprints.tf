@@ -51,7 +51,7 @@ module "eks_blueprints" {
       node_group_name = "general"
       instance_types  = ["t3.medium"]
       desired_size    = "1"
-      max_size        = "2"
+      max_size        = "3"
       min_size        = "1"
     }
   }
