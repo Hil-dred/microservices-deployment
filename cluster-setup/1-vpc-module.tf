@@ -41,8 +41,10 @@ module "vpc" {
   public_subnets  = ["10.0.64.0/19", "10.0.96.0/19"]
 
   enable_nat_gateway = true
-  enable_vpn_gateway = true
-  one_nat_gateway_per_az = false
+  single_nat_gateway = true
+  enable_dns_hostnames = true
+  # enable_vpn_gateway = true
+  # one_nat_gateway_per_az = false
 
   public_subnet_tags = {
     "kubernetes.io/role/elb"     = 1

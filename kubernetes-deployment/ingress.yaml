@@ -1,29 +1,3 @@
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: sock-shop-ingress
-#   namespace: sock-shop
-#   annotations:
-#     # For NGINX ingress controller (replace with your ingress controller if different)
-#     kubernetes.io/ingress.class: "alb"
-#     # Use the load balancer's DNS name as the default backend
-#     alb.ingress.kubernetes.io/scheme: internet-facing  # For ALB (optional)
-#     alb.ingress.kubernetes.io/target-type: ip          # For ALB target type
-# spec:
-#   rules:
-#   # - host: "<LB-DNS>.elb.amazonaws.com"  # Replace this with your LoadBalancer DNS name
-#     http:
-#       paths:
-#       - path: /
-#         pathType: Prefix
-#         backend:
-#           service:
-#             name: front-end
-#             port:
-#               number: 80
-
-
-
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
