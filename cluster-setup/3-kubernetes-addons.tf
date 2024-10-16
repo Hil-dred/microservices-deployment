@@ -51,7 +51,7 @@
 
 module "eks_blueprints_addons" {
   source = "aws-ia/eks-blueprints-addons/aws"
-  version = "1.16.0" 
+  version = "1.17.0" 
   cluster_name      = "microservices-demo"
   cluster_endpoint  = module.eks_blueprints.eks_cluster_endpoint
   cluster_version   = module.eks_blueprints.eks_cluster_version
