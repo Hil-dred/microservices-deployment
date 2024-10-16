@@ -32,21 +32,21 @@ module "eks_blueprints" {
   enable_irsa     = true
 
 # IAM Roles section
-  # map_roles = [
-  #   # {
-  #   #   rolearn  = module.karpenter.role_arn
-  #   #   username = "system:node:{{EC2PrivateDNSName}}"
-  #   #   groups = [
-  #   #     "system:bootstrappers",
-  #   #     "system:nodes",
-  #   #   ]
-  #   # },
-  #   {
-  #     rolearn  = aws_iam_role.developer.arn
-  #     username = "developer"
-  #     groups   = ["reader"]
-  #   },
-  # ]
+  map_roles = [
+    # {
+    #   rolearn  = module.karpenter.role_arn
+    #   username = "system:node:{{EC2PrivateDNSName}}"
+    #   groups = [
+    #     "system:bootstrappers",
+    #     "system:nodes",
+    #   ]
+    # },
+    {
+      rolearn  = aws_iam_role.developer.arn
+      username = "developer"
+      groups   = ["reader"]
+    },
+  ]
 
   # fargate_profiles = {
   #   staging = {

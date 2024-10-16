@@ -260,7 +260,7 @@ spec:
                 name: rds-secret
                 key: MYSQL_ROOT_PASSWORD
           - name: MYSQL_DATABASE
-            value: microservices-demo  # Your Aurora DB name
+            value: socksdb  # Your Aurora DB name
           - name: MYSQL_HOST
             valueFrom:
               secretKeyRef:
