@@ -75,6 +75,7 @@ resource "aws_rds_cluster" "microservices-demo" {
   manage_master_user_password = true
   master_username    = "demouser"
   storage_encrypted  = true
+  skip_final_snapshot = true
 
   serverlessv2_scaling_configuration {
     max_capacity = 1.0
