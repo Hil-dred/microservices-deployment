@@ -97,11 +97,18 @@ kubectl create secret generic rds-secret \
   --from-literal=MYSQL_HOST=tf-20241009114516074300000003.c4rola1vcvvx.us-east-2ku.rds.amazonaws.com \
   --from-literal=MYSQL_USER=catalogue_user
 
+
+kubectl create secret generic dummy-secret \
+  --from-literal=DUMMY="dummy" \
+
+
 # Apply manifests
 kubectl apply -f complete-demo.yaml
 kubectl apply -f ingress.yaml
 
 #
+
+kubectl create namespace  sock-shop 
 kubectl config set-context --current --namespace=sock-shop
 #
 kubectl port-forward service/front-end -n sock-shop 8080:80
@@ -115,11 +122,10 @@ kubectl create secret generic rds-secret \
   --from-literal=MYSQL_USER=demouser
 
 
-kubectl create namespace  sock-shop 
 
 kubectl create secret generic rds-secret \
   --from-literal=MYSQL_ROOT_PASSWORD='4K7Ae6~Vbmli5!NuPMeqV-Eh>E1r' \
-  --from-literal=MYSQL_HOST='tf-20241016130246263700000003.c4rola1vcvvx.us-east-2.rds.amazonaws.com'\
+  --from-literal=MYSQL_HOST='tf-2024102309203485750000000d.c4rola1vcvvx.us-east-2.rds.amazonaws.com'\
   --from-literal=MYSQL_USER=demouser
 
 
@@ -150,11 +156,11 @@ aws s3 cp s3://microservices-demo-terraform-state/copy-dump/dump.sql /home/ec2-u
         sudo yum install mysql -y
 
 4. Create DB
-mysql -h tf-20241016130246263700000003.c4rola1vcvvx.us-east-2.rds.amazonaws.com -u demouser -p --ssl-mode=DISABLED
+mysql -h tf-2024102309203485750000000d.c4rola1vcvvx.us-east-2.rds.amazonaws.com -u demouser -p --ssl-mode=DISABLED
 OR
-mysql -h tf-20241016130246263700000003.c4rola1vcvvx.us-east-2.rds.amazonaws.com -u demouser -p --skip-ssl
+mysql -h tf-2024102309203485750000000d.c4rola1vcvvx.us-east-2.rds.amazonaws.com -u demouser -p --skip-ssl
 
-mysql -h tf-20241016130246263700000003.c4rola1vcvvx.us-east-2.rds.amazonaws.com -u catalogue_user -p --skip-ssl
+mysql -h tf-2024102309203485750000000d.c4rola1vcvvx.us-east-2.rds.amazonaws.com -u catalogue_user -p --skip-ssl
 
 default_password
 
@@ -162,13 +168,13 @@ CREATE DATABASE socksdb;
 
 5. Restore dump into DB
 
-mysql -h tf-20241016130246263700000003.c4rola1vcvvx.us-east-2.rds.amazonaws.com -u demouser -p socksdb < /home/ec2-user/dump.sql
+mysql -h tf-2024102309203485750000000d.c4rola1vcvvx.us-east-2.rds.amazonaws.com -u demouser -p socksdb < /home/ec2-user/dump.sql
 
-PSWD: .TT*THbYe:c*~wR4<KOyZrvZ~lU8
+PSWD: Z%ga-9~L2e3.i{7G9-1xW$bOvnNZ
 
 6. Verify data
 
-mysql -h tf-20241016130246263700000003.c4rola1vcvvx.us-east-2.rds.amazonaws.com -P 3306 -u demouser -p
+mysql -h tf-2024102309203485750000000d.c4rola1vcvvx.us-east-2.rds.amazonaws.com -P 3306 -u demouser -p
 USE socksdb;
 SHOW TABLES;
 SELECT * FROM sock_tag;
@@ -212,7 +218,9 @@ docker exec -it catalogue-db /bin/bash
 
 
 ### TROUBLESHOOT RBAC
-aws eks update-kubeconfig --name microservices-demo --region us-east-2 --profile developer
+nano ~/.aws/config 
+aws sts get-caller-identity --profile microservices-demo
+aws eks update-kubeconfig --name microservices-demo --region us-east-2 --profile microservices-demo
 kubectl auth can-i "*" "*"
 kubectl get clusterrolebinding reader -o yaml 
 
@@ -221,3 +229,13 @@ kubectl get rolebinding -A -o yaml | grep -A 10 'developer'
 
 kubectl get clusterrole reader -o yaml
 
+kubectl auth can-i "*" "*" --as=developer
+
+
+### ADD ACCESS ENTRY FOR IAM USER ACCESS TO CLUSTER
+aws eks create-access-entry --cluster-name my-cluster --principal-arn arn:aws:iam::111122223333:user/my-user --type STANDARD --username my-user
+
+aws eks list-access-policies --output table
+
+aws eks associate-access-policy --cluster-name my-cluster --principal-arn arn:aws:iam::111122223333:role/my-role \
+    --access-scope type=namespace,namespaces=my-namespace1,my-namespace2 --policy-arn arn:aws:eks::aws:cluster-access-policy/AmazonEKSViewPolicy
