@@ -84,7 +84,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v3
         with:
           role-to-assume: ${{ secrets.OIDC_ROLE_ARN }}
-          aws-region: ${{ var.region }}
+          aws-region: ${{ vars.region }}
 
       - name: Install kubectl
         run: |
@@ -100,8 +100,8 @@ jobs:
 
       - name: Set up kubeconfig
         run: |
-          aws eks update-kubeconfig --region ${{ var.region }} --name ${{ secrets.CLUSTER_NAME }};
-          kubectl config set-context --current --namespace=${{ var.namespace }}
+          aws eks update-kubeconfig --region ${{ vars.region }} --name ${{ secrets.CLUSTER_NAME }};
+          kubectl config set-context --current --namespace=${{ vars.namespace }}
 
       - name: Deploy to EKS Cluster
         run: |
