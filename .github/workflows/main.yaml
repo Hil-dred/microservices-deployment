@@ -7,7 +7,7 @@ on:
 
 permissions:
   id-token: write # This is required for requesting the JWT
-
+  contents: read
 
 jobs:
 
@@ -18,8 +18,8 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+        # with:
+        #   token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Trivy
         run: |
