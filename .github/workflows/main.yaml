@@ -18,8 +18,14 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-        # with:
-        #   token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cache Trivy DB
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/trivy
+          key: ${{ runner.os }}-trivy-db
+          restore-keys: |
+            ${{ runner.os }}-trivy-db
 
       - name: Install Trivy
         run: |
@@ -64,13 +70,13 @@ jobs:
 
           echo "Scanning Docker image for vulnerabilities for SESSION DB..."
           trivy image --severity HIGH,CRITICAL --format table ${{ secrets.SESSION_DB_IMAGE }}
-          
+
           echo "Scanning Docker image for vulnerabilities for SHIPPING..."
           trivy image --severity HIGH,CRITICAL --format table ${{ secrets.SHIPPING_IMAGE }}
-          
+
           echo "Scanning Docker image for vulnerabilities for USER..."
           trivy image --severity HIGH,CRITICAL --format table ${{ secrets.USER_IMAGE }}
-          
+
           echo "Scanning Docker image for vulnerabilities for USER DB..."
           trivy image --severity HIGH,CRITICAL --format table ${{ secrets.USER_DB_IMAGE }}
 
