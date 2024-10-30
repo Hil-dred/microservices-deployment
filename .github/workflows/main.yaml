@@ -205,10 +205,10 @@ jobs:
           kubectl config set-context --current --namespace=${{ vars.namespace }}
 
       - name: Fetch eks cluster details
-              run: |
-                kubectl version
-                echo Aries_is_live.......................
-                kubectl get pods -A
+        run: |
+          kubectl version
+          echo Aries_is_live.......................
+          kubectl get pods -A
 
       # - name: Deploy to EKS Cluster
       #   run: |
