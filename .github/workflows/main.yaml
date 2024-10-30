@@ -182,7 +182,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up AWS CLI
-        uses: aws-actions/configure-aws-credentials@v3
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.OIDC_ROLE_ARN }}
           aws-region: ${{ vars.region }}
@@ -204,9 +204,16 @@ jobs:
           aws eks update-kubeconfig --region ${{ vars.region }} --name ${{ secrets.CLUSTER_NAME }};
           kubectl config set-context --current --namespace=${{ vars.namespace }}
 
-      - name: Deploy to EKS Cluster
-        run: |
-          kubectl apply -f kubernetes-deployment/cluster-deploy
+      - name: Fetch eks cluster details
+              run: |
+                kubectl version
+                echo Aries_is_live.......................
+                kubectl get pods -A
+
+      # - name: Deploy to EKS Cluster
+      #   run: |
+      #     kubectl get pods
+      #     #kubectl apply -f kubernetes-deployment/cluster-deploy
 
       - name: Verify Deployment
         run: |
