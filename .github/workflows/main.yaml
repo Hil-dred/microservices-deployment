@@ -208,12 +208,12 @@ jobs:
         run: |
           kubectl version
           echo "Cluster Authentication in progress......."
-          kubectl get pods
+          kubectl get ns
 
-      # - name: Deploy to EKS Cluster
-      #   run: |
-      #     kubectl get pods
-      #     #kubectl apply -f kubernetes-deployment/cluster-deploy
+      - name: Deploy to EKS Cluster
+        run: |
+          kubectl get pods
+          #kubectl apply -f kubernetes-deployment/cluster-deploy
 
       - name: Verify Deployment
         run: |
