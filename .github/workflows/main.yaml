@@ -212,10 +212,12 @@ jobs:
 
       - name: Deploy to EKS Cluster
         run: |
-          kubectl get pods
-          #kubectl apply -f kubernetes-deployment/cluster-deploy
+          # kubectl get pods
+          kubectl apply -f kubernetes-deployment/cluster-deploy
 
       - name: Verify Deployment
         run: |
+          echo "Get pods......."
           kubectl get pods
+          echo "Get ingress......."
           kubectl get ingress
