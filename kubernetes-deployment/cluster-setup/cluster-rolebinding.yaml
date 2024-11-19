@@ -10,5 +10,4 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: microservices-oidc
-    namespace: sock-shop
-
+    namespace: sock-shop-1
