@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: sock-shop-ingress
-  namespace: sock-shop
+  namespace: sock-shop-1
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing  # Public access
     alb.ingress.kubernetes.io/target-type: ip  # Direct traffic to pods
