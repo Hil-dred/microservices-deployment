@@ -261,14 +261,14 @@ spec:
           - name: MYSQL_ROOT_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: rds-secret
+                name: rds-secret-two
                 key: MYSQL_ROOT_PASSWORD
           - name: MYSQL_DATABASE
             value: socksdb  # Your Aurora DB name
           - name: MYSQL_HOST
             valueFrom:
               secretKeyRef:
-                name: rds-secret
+                name: rds-secret-two
                 key: MYSQL_HOST  # Use the secret for the endpoint
           - name: MYSQL_PORT
             value: "3306"
