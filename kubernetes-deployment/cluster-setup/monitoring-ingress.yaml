@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: monitoring-ingress
-  namespace: kube-prometheus-stack
+  namespace: prometheus
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing  # Public access
     alb.ingress.kubernetes.io/target-type: ip  # Direct traffic to pods
@@ -16,14 +16,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: kube-prometheus-stack-grafana  # Grafana service name
+                name: stable-grafana  # Grafana service name
                 port:
                   number: 80  # Port exposed by Grafana service
-          # Prometheus at /prometheus path
-          # - path: /prometheus
-          #   pathType: Prefix
-          #   backend:
-          #     service:
-          #       name: kube-prometheus-stack-prometheus  # Prometheus service name
-          #       port:
-          #         number: 9090  # Port exposed by Prometheus service
+
