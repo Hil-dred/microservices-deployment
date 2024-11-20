@@ -63,10 +63,6 @@ jobs:
           role-to-assume: ${{ secrets.OIDC_ROLE_ARN }}
           aws-region: ${{ vars.region }}
 
-      - name: Get Database Backup
-        run: |
-          curl -X POST https://fyl2ap4goj.execute-api.us-east-2.amazonaws.com/demo/snapshot
-
       - name: Install kubectl
         run: |
           curl -LO "https://dl.k8s.io/release/v1.26.3/bin/linux/amd64/kubectl"
